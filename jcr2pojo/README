@@ -1,0 +1,3 @@
+
+jcr2pojo is a simple command-line application which can read a JCR and produce appropriate DAO and POJO objects from it to be used with OM DAO.
+
