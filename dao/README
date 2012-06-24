@@ -1,0 +1,2 @@
+
+This is the Object Manager generic DAO.  It supports Hibernate-like DAO functionality and defines an @Transactional annotation which can implement JCR transactions.
