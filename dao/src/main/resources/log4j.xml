@@ -7,9 +7,6 @@
 			<param name="ConversionPattern" value="%5p [%t] (%F:%L) - %m%n" />
 		</layout>
 	</appender>
-	<logger name="com.khubla.xmlautobeans.impl">
-		<level value="info" />
-	</logger>
 	<logger name="org.om.core.impl">
 		<level value="info" />
 	</logger>

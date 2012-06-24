@@ -12,6 +12,7 @@ public class TestSessionUtil {
    public void testInstantiation() {
       try {
          Assert.assertNotNull(SessionUtil.getSession());
+         Assert.assertNotNull(SessionUtil.getPersistenceContext());
       } catch (final Exception e) {
          e.printStackTrace();
          Assert.fail();

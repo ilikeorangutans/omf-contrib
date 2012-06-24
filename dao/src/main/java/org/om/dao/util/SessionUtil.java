@@ -3,9 +3,9 @@ package org.om.dao.util;
 import org.om.core.api.persistence.PersistenceContext;
 import org.om.core.api.session.Session;
 import org.om.core.api.session.factory.SessionFactory;
-import org.om.core.impl.persistence.jcr.exception.JCRException;
 import org.om.dao.config.ObjectManagerConfiguration;
 import org.om.dao.config.impl.XMLObjectManagerConfiguration;
+import org.om.dao.exception.DAOException;
 
 /**
  * @author tome
@@ -19,7 +19,7 @@ public class SessionUtil {
    /**
     * get a JCR context
     */
-   public static PersistenceContext getPersistenceContext() throws JCRException {
+   public static PersistenceContext getPersistenceContext() throws DAOException {
       try {
          /*
           * init if needed
@@ -30,14 +30,14 @@ public class SessionUtil {
           */
          return objectManagerConfiguration.getPersistenceContext();
       } catch (final Exception e) {
-         throw new JCRException("Exception in getSession", e);
+         throw new DAOException("Exception in getSession", e);
       }
    }
 
    /**
     * get OM session
     */
-   public static Session getSession() throws JCRException {
+   public static Session getSession() throws DAOException {
       try {
          /*
           * init if needed
@@ -52,20 +52,20 @@ public class SessionUtil {
           */
          return sessionFactory.getSession(objectManagerConfiguration.getPersistenceContext());
       } catch (final Exception e) {
-         throw new JCRException("Exception in getSession", e);
+         throw new DAOException("Exception in getSession", e);
       }
    }
 
    /**
     * init
     */
-   private static void init() throws JCRException {
+   private static void init() throws DAOException {
       try {
          if (null == objectManagerConfiguration) {
             objectManagerConfiguration = XMLObjectManagerConfiguration.getObjectManagerConfiguration();
          }
       } catch (final Exception e) {
-         throw new JCRException("Exception in init", e);
+         throw new DAOException("Exception in init", e);
       }
    }
 }

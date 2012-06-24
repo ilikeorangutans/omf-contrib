@@ -7,10 +7,10 @@ import org.om.core.api.persistence.PersistenceContext;
 import org.om.core.api.session.factory.SessionFactory;
 import org.om.core.impl.persistence.jcr.JcrPersistenceContext;
 import org.om.core.impl.persistence.jcr.JcrPersistenceDelegateFactory;
-import org.om.core.impl.persistence.jcr.exception.JCRException;
 import org.om.core.impl.persistence.jcr.sessionfactory.JCRSessionFactory;
 import org.om.core.impl.session.factory.DefaultSessionFactory;
 import org.om.dao.config.ObjectManagerConfiguration;
+import org.om.dao.exception.DAOException;
 
 /**
  * @author tome
@@ -28,7 +28,7 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
    /**
     * singleton getter
     */
-   public static ObjectManagerConfiguration getObjectManagerConfiguration() throws JCRException {
+   public static ObjectManagerConfiguration getObjectManagerConfiguration() throws DAOException {
       if (null == instance) {
          instance = new XMLObjectManagerConfiguration();
       }
@@ -51,18 +51,18 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
    /**
     * private ctor
     */
-   private XMLObjectManagerConfiguration() throws JCRException {
+   private XMLObjectManagerConfiguration() throws DAOException {
       try {
          configure();
       } catch (final Exception e) {
-         throw new JCRException("Exception in XMLObjectManagerConfiguration ctor", e);
+         throw new DAOException("Exception in XMLObjectManagerConfiguration ctor", e);
       }
    }
 
    /**
     * configure the OM Configuration
     */
-   private void configure() throws JCRException {
+   private void configure() throws DAOException {
       try {
          final InputStream is = XMLObjectManagerConfiguration.class.getResourceAsStream(PROPERTIES_FILE);
          if (null != is) {
@@ -90,15 +90,15 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
             throw new Exception("Unable to open properties file '" + PROPERTIES_FILE + "'");
          }
       } catch (final Exception e) {
-         throw new JCRException("Exception in parseConfiguration ctor", e);
+         throw new DAOException("Exception in parseConfiguration ctor", e);
       }
    }
 
-   public PersistenceContext getPersistenceContext() throws Exception {
+   public PersistenceContext getPersistenceContext() throws DAOException {
       return persistenceContext;
    }
 
-   public SessionFactory getSessionFactory() throws Exception {
+   public SessionFactory getSessionFactory() throws DAOException {
       return sessionFactory;
    }
 }
