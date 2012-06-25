@@ -16,7 +16,7 @@ import org.om.dao.exception.DAOException;
 /**
  * @author tome
  */
-public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration {
+public class PropertiesFileObjectManagerConfiguration implements ObjectManagerConfiguration {
    /**
     * props files
     */
@@ -31,7 +31,7 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
     */
    public static ObjectManagerConfiguration getObjectManagerConfiguration() throws DAOException {
       if (null == instance) {
-         instance = new XMLObjectManagerConfiguration();
+         instance = new PropertiesFileObjectManagerConfiguration();
       }
       return instance;
    }
@@ -47,12 +47,12 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
    /**
     * singleton
     */
-   private static XMLObjectManagerConfiguration instance = null;
+   private static PropertiesFileObjectManagerConfiguration instance = null;
 
    /**
     * private ctor
     */
-   private XMLObjectManagerConfiguration() throws DAOException {
+   private PropertiesFileObjectManagerConfiguration() throws DAOException {
       try {
          configure();
       } catch (final Exception e) {
@@ -65,17 +65,17 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
     */
    private void configure() throws DAOException {
       try {
-         final InputStream is = XMLObjectManagerConfiguration.class.getResourceAsStream(PROPERTIES_FILE);
+         final InputStream is = PropertiesFileObjectManagerConfiguration.class.getResourceAsStream(PROPERTIES_FILE);
          if (null != is) {
             /*
              * props
              */
-            Properties props = new Properties();
+            final Properties props = new Properties();
             props.load(is);
             /*
              * session factory
              */
-            String sessionFactoryName = props.getProperty(SESSIONFACTORY);
+            final String sessionFactoryName = props.getProperty(SESSIONFACTORY);
             if (null != sessionFactoryName) {
                jcrSessionFactory = (JCRSessionFactory) Class.forName(sessionFactoryName).newInstance();
                /*
@@ -90,7 +90,7 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
             throw new Exception("Unable to open properties file '" + PROPERTIES_FILE + "'");
          }
       } catch (final Exception e) {
-         throw new DAOException("Exception in parseConfiguration ctor", e);
+         throw new DAOException("Exception in configure", e);
       }
    }
 

@@ -4,7 +4,7 @@ import org.om.core.api.session.Session;
 import org.om.core.api.session.factory.SessionFactory;
 import org.om.core.impl.persistence.jcr.JcrPersistenceContext;
 import org.om.dao.config.ObjectManagerConfiguration;
-import org.om.dao.config.impl.XMLObjectManagerConfiguration;
+import org.om.dao.config.impl.PropertiesFileObjectManagerConfiguration;
 import org.om.dao.exception.DAOException;
 
 /**
@@ -28,7 +28,7 @@ public class SessionUtil {
          /*
           * session, via the JCR context
           */
-         JcrPersistenceContext jcrPersistenceContext = (JcrPersistenceContext) objectManagerConfiguration.getPersistenceContext();
+         final JcrPersistenceContext jcrPersistenceContext = (JcrPersistenceContext) objectManagerConfiguration.getPersistenceContext();
          if (null != jcrPersistenceContext) {
             return jcrPersistenceContext.getSession();
          } else {
@@ -67,7 +67,7 @@ public class SessionUtil {
    private static void init() throws DAOException {
       try {
          if (null == objectManagerConfiguration) {
-            objectManagerConfiguration = XMLObjectManagerConfiguration.getObjectManagerConfiguration();
+            objectManagerConfiguration = PropertiesFileObjectManagerConfiguration.getObjectManagerConfiguration();
          }
       } catch (final Exception e) {
          throw new DAOException("Exception in init", e);
