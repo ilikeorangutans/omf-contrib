@@ -3,10 +3,11 @@ package org.om.dao.config.impl;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.om.core.api.persistence.PersistenceAdapterFactory;
 import org.om.core.api.persistence.PersistenceContext;
 import org.om.core.api.session.factory.SessionFactory;
+import org.om.core.impl.persistence.jcr.JcrPersistenceAdapterFactory;
 import org.om.core.impl.persistence.jcr.JcrPersistenceContext;
-import org.om.core.impl.persistence.jcr.JcrPersistenceDelegateFactory;
 import org.om.core.impl.persistence.jcr.sessionfactory.JCRSessionFactory;
 import org.om.core.impl.session.factory.DefaultSessionFactory;
 import org.om.dao.config.ObjectManagerConfiguration;
@@ -40,9 +41,9 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
     */
    private SessionFactory sessionFactory;
    /**
-    * persistence context
+    * JCRSessionFactory
     */
-   private PersistenceContext persistenceContext;
+   private JCRSessionFactory jcrSessionFactory;
    /**
     * singleton
     */
@@ -76,13 +77,12 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
              */
             String sessionFactoryName = props.getProperty(SESSIONFACTORY);
             if (null != sessionFactoryName) {
-               final JCRSessionFactory jcrSessionFactory = (JCRSessionFactory) Class.forName(sessionFactoryName).newInstance();
+               jcrSessionFactory = (JCRSessionFactory) Class.forName(sessionFactoryName).newInstance();
                /*
                 * build up the rest
                 */
-               persistenceContext = new JcrPersistenceContext(jcrSessionFactory);
-               final JcrPersistenceDelegateFactory jcrPersistenceDelegateFactory = new JcrPersistenceDelegateFactory();
-               sessionFactory = new DefaultSessionFactory(jcrPersistenceDelegateFactory);
+               final PersistenceAdapterFactory persistenceDelegateFactory = new JcrPersistenceAdapterFactory();
+               sessionFactory = new DefaultSessionFactory(persistenceDelegateFactory);
             } else {
                throw new Exception("Unable to find property '" + SESSIONFACTORY + "'");
             }
@@ -95,7 +95,7 @@ public class XMLObjectManagerConfiguration implements ObjectManagerConfiguration
    }
 
    public PersistenceContext getPersistenceContext() throws DAOException {
-      return persistenceContext;
+      return new JcrPersistenceContext(jcrSessionFactory.getSession());
    }
 
    public SessionFactory getSessionFactory() throws DAOException {

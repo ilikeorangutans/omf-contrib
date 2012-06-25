@@ -9,8 +9,6 @@ import javax.transaction.xa.Xid;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.jackrabbit.rmi.client.ClientXASession;
-import org.om.core.api.persistence.PersistenceContext;
-import org.om.core.impl.persistence.jcr.JcrPersistenceContext;
 import org.om.dao.annotation.transactional.Transactional;
 import org.om.dao.exception.DAOException;
 import org.om.dao.util.SessionUtil;
@@ -29,51 +27,42 @@ public class JCRTransactionalMethodIterceptor implements MethodInterceptor {
          final Transactional transactional = method.getAnnotation(Transactional.class);
          if (null != transactional) {
             /*
-             * get the JCR context
+             * get JCR session. ugh. Sorry.
              */
-            final PersistenceContext persistenceContext = SessionUtil.getPersistenceContext();
-            if (null != persistenceContext) {
+            final Session session = SessionUtil.getJCRSession();
+            if (null != session) {
                /*
-                * get JCR session. ugh. Sorry.
+                * upcast
                 */
-               final Session session = ((JcrPersistenceContext) persistenceContext).getSession();
-               if (null != session) {
+               final ClientXASession xaSession = (ClientXASession) session;
+               /*
+                * transaction id
+                */
+               final Xid xid = new OMXid();
+               try {
                   /*
-                   * upcast
+                   * start tx
                    */
-                  final ClientXASession xaSession = (ClientXASession) session;
+                  xaSession.start(xid, XAResource.TMNOFLAGS);
                   /*
-                   * transaction id
+                   * invoke
                    */
-                  final Xid xid = new OMXid();
-                  try {
-                     /*
-                      * start tx
-                      */
-                     xaSession.start(xid, XAResource.TMNOFLAGS);
-                     /*
-                      * invoke
-                      */
-                     result = methodInvocation.proceed();
-                     /*
-                      * commit!
-                      */
-                     xaSession.commit(xid, true);
-                  } catch (final Exception e) {
-                     /*
-                      * uh-oh, rollback
-                      */
-                     xaSession.rollback(xid);
-                     throw new RuntimeException("Exception in invoke ", e);
-                  }
-               } else {
-                  throw new Exception("Unable to get JCR Session");
+                  result = methodInvocation.proceed();
+                  /*
+                   * commit!
+                   */
+                  xaSession.commit(xid, true);
+               } catch (final Exception e) {
+                  /*
+                   * uh-oh, rollback
+                   */
+                  xaSession.rollback(xid);
+                  throw new RuntimeException("Exception in invoke ", e);
                }
             } else {
-               throw new Exception("Unable to get JCR Persistence Context");
+               throw new Exception("Unable to get JCR Session");
             }
-         }
-         else {
+         } else {
             result = methodInvocation.proceed();
          }
          return result;
