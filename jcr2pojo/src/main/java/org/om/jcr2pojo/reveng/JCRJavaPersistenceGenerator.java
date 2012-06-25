@@ -74,7 +74,7 @@ public class JCRJavaPersistenceGenerator {
             while (iter.hasNext()) {
                final String key = iter.next();
                final EntityMapping entityMapping = mappings.get(key);
-               if (entityMapping.getPropertyMappings().getSize() > 0) {
+               if (entityMapping.getItemMappings().getSize() > 0) {
                   generatePOJO(entityMapping);
                   generateDAO(entityMapping);
                }

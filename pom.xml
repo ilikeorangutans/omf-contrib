@@ -47,12 +47,9 @@
 		<module>dao</module>
 		<module>jcrcache</module>
 		<module>http</module>
-		<!-- 
 		<module>jcr2pojo</module>
 		<module>objectmanager-maven-plugin</module>
-		 -->
 		<module>examples</module>
-		
 	</modules>
 	<build>
 		<plugins>
