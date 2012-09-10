@@ -8,13 +8,13 @@ import org.om.dao.exception.DAOException;
  * @author tome
  */
 public interface ObjectManagerConfiguration {
-   /**
-    * get JCR persistence context
-    */
-   public PersistenceContext getPersistenceContext() throws DAOException;
+	/**
+	 * get JCR persistence context
+	 */
+	public PersistenceContext getPersistenceContext() throws DAOException;
 
-   /**
-    * get a fully configured OM session factory
-    */
-   public SessionFactory getSessionFactory() throws DAOException;
+	/**
+	 * get a fully configured OM session factory
+	 */
+	public SessionFactory getSessionFactory() throws DAOException;
 }

@@ -1,8 +1,7 @@
 package org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl;
 
-import javax.jcr.Property;
-
-import org.om.core.impl.persistence.jcr.exception.JCRException;
+import org.om.core.api.annotation.Property;
+import org.om.core.impl.persistence.jcr.exception.JcrException;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.PropertyNamingStrategy;
 
 /**
@@ -28,11 +27,11 @@ public class DefaultPropertyNamingStrategy implements PropertyNamingStrategy {
 		}
 	}
 
-	public String generateName(Property property) throws JCRException {
+	public String generateName(Property property) throws JcrException {
 		try {
 			return fixName(property.getName());
 		} catch (final Exception e) {
-			throw new JCRException("Exception in generateName", e);
+			throw new JcrException("Exception in generateName", e);
 		}
 	}
 

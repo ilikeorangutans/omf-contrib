@@ -1,9 +1,8 @@
 package org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl;
 
-import javax.jcr.Node;
-
-import org.om.core.impl.persistence.jcr.exception.JCRException;
+import org.om.core.impl.persistence.jcr.exception.JcrException;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.ClassNamingStrategy;
+import org.w3c.dom.Node;
 
 /**
  * 
@@ -27,11 +26,11 @@ public class NodeNameClassNamingStrategy implements ClassNamingStrategy {
 		}
 	}
 
-	public String generateName(Node node) throws JCRException {
+	public String generateName(Node node) throws JcrException {
 		try {
 			return fixName(node.getName());
 		} catch (final Exception e) {
-			throw new JCRException("Exception in generateName", e);
+			throw new JcrException("Exception in generateName", e);
 		}
 	}
 }

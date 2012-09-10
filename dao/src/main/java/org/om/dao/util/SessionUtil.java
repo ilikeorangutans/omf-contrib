@@ -11,66 +11,66 @@ import org.om.dao.exception.DAOException;
  * @author tome
  */
 public class SessionUtil {
-   /**
-    * the OM config
-    */
-   private static ObjectManagerConfiguration objectManagerConfiguration = null;
+	/**
+	 * the OM config
+	 */
+	private static ObjectManagerConfiguration objectManagerConfiguration = null;
 
-   /**
-    * get a JCR session
-    */
-   public static javax.jcr.Session getJCRSession() throws DAOException {
-      try {
-         /*
-          * init if needed
-          */
-         init();
-         /*
-          * session, via the JCR context
-          */
-         final JcrPersistenceContext jcrPersistenceContext = (JcrPersistenceContext) objectManagerConfiguration.getPersistenceContext();
-         if (null != jcrPersistenceContext) {
-            return jcrPersistenceContext.getSession();
-         } else {
-            throw new Exception("Unable to get JcrPersistenceContext");
-         }
-      } catch (final Exception e) {
-         throw new DAOException("Exception in getSession", e);
-      }
-   }
+	/**
+	 * get a JCR session
+	 */
+	public static javax.jcr.Session getJCRSession() throws DAOException {
+		try {
+			/*
+			 * init if needed
+			 */
+			init();
+			/*
+			 * session, via the JCR context
+			 */
+			final JcrPersistenceContext jcrPersistenceContext = (JcrPersistenceContext) objectManagerConfiguration.getPersistenceContext();
+			if (null != jcrPersistenceContext) {
+				return jcrPersistenceContext.getSession();
+			} else {
+				throw new Exception("Unable to get JcrPersistenceContext");
+			}
+		} catch (final Exception e) {
+			throw new DAOException("Exception in getSession", e);
+		}
+	}
 
-   /**
-    * get OM session
-    */
-   public static Session getSession() throws DAOException {
-      try {
-         /*
-          * init if needed
-          */
-         init();
-         /*
-          * the sessionfactory
-          */
-         final SessionFactory sessionFactory = objectManagerConfiguration.getSessionFactory();
-         /*
-          * session, via the JCR context
-          */
-         return sessionFactory.getSession(objectManagerConfiguration.getPersistenceContext());
-      } catch (final Exception e) {
-         throw new DAOException("Exception in getSession", e);
-      }
-   }
+	/**
+	 * get OM session
+	 */
+	public static Session getSession() throws DAOException {
+		try {
+			/*
+			 * init if needed
+			 */
+			init();
+			/*
+			 * the sessionfactory
+			 */
+			final SessionFactory sessionFactory = objectManagerConfiguration.getSessionFactory();
+			/*
+			 * session, via the JCR context
+			 */
+			return sessionFactory.getSession(objectManagerConfiguration.getPersistenceContext());
+		} catch (final Exception e) {
+			throw new DAOException("Exception in getSession", e);
+		}
+	}
 
-   /**
-    * init
-    */
-   private static void init() throws DAOException {
-      try {
-         if (null == objectManagerConfiguration) {
-            objectManagerConfiguration = PropertiesFileObjectManagerConfiguration.getObjectManagerConfiguration();
-         }
-      } catch (final Exception e) {
-         throw new DAOException("Exception in init", e);
-      }
-   }
+	/**
+	 * init
+	 */
+	private static void init() throws DAOException {
+		try {
+			if (null == objectManagerConfiguration) {
+				objectManagerConfiguration = PropertiesFileObjectManagerConfiguration.getObjectManagerConfiguration();
+			}
+		} catch (final Exception e) {
+			throw new DAOException("Exception in init", e);
+		}
+	}
 }
