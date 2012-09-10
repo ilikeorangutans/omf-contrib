@@ -15,7 +15,6 @@ public class TestDAOGenerator {
 	@Test
 	public void test1() {
 		try {
-
 			/*
 			 * generate some java
 			 */

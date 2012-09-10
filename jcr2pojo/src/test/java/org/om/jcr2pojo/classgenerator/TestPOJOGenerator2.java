@@ -2,18 +2,21 @@ package org.om.jcr2pojo.classgenerator;
 
 import java.io.ByteArrayOutputStream;
 
+import javax.jcr.Node;
+import javax.jcr.Session;
+
 import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.om.core.api.mapping.EntityMapping;
-import org.om.core.api.session.Session;
+import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
+import org.om.core.impl.persistence.jcr.util.RecursiveDelete;
 import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
 import org.om.jcr2pojo.entitymappingbuilder.impl.EntityMappingBuilderImpl;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.DefaultPropertyNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.NodeIdentifierClassNamingStrategy;
-import org.w3c.dom.Node;
 
 /**
  * @author tome
@@ -94,8 +97,8 @@ public class TestPOJOGenerator2 {
 					new DefaultPropertyNamingStrategy());
 			final EntityMapping entityMapping = entityMappingBuilder.build("foo/bar", session);
 			Assert.assertNotNull(entityMapping);
-			Assert.assertNotNull(entityMapping.getItemMappings());
-			Assert.assertTrue(entityMapping.getItemMappings().getSize() == 5);
+			Assert.assertNotNull(entityMapping.getMappedFields());
+			Assert.assertTrue(entityMapping.getMappedFields().getSize() == 5);
 			/*
 			 * class
 			 */
