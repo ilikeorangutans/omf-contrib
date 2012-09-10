@@ -28,7 +28,7 @@ public class NodeNameClassNamingStrategy implements ClassNamingStrategy {
 
 	public String generateName(Node node) throws JcrException {
 		try {
-			return fixName(node.getName());
+			return fixName(node.getNodeName());
 		} catch (final Exception e) {
 			throw new JcrException("Exception in generateName", e);
 		}

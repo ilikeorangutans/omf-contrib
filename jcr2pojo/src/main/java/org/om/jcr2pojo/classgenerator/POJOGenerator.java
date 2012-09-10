@@ -7,8 +7,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 
+import javax.jcr.PropertyType;
+
 import org.om.core.api.mapping.EntityMapping;
-import org.om.core.api.mapping.field.Mapping;
+import org.om.core.api.mapping.Fields;
+import org.om.core.api.mapping.MappedField;
 import org.om.core.impl.persistence.jcr.util.PropertyTypeToClass;
 import org.om.jcr2pojo.exception.JCR2POJOException;
 
@@ -56,24 +59,24 @@ public class POJOGenerator {
 			/*
 			 * walk fields
 			 */
-			final ItemMap itemMap = entityMapping.getItemMappings();
-			if (null != itemMap) {
-				final Collection<Mapping> mappings = itemMap.getAll();
-				final Iterator<Mapping> iter = mappings.iterator();
+			final Fields fields = entityMapping.getMappedFields();
+			if (null != fields) {
+				final Collection<MappedField> mappings = fields.getAll();
+				final Iterator<MappedField> iter = mappings.iterator();
 				while (iter.hasNext()) {
-					final Mapping mapping = iter.next();
+					final MappedField mapping = iter.next();
 					/*
 					 * typename
 					 */
-					final Class<?> type = mapping.getFieldType();
+					final Class<?> type = mapping.getType();
 					final String typename = type.getSimpleName();
-					final String fieldname = mapping.getFieldname();
+					final String fieldname = mapping.getName();
 					/*
 					 * declare property. for now, as string.
 					 */
 					writer.println("\t/**");
-					writer.println("\t * " + mapping.getFieldname() + " (PropertyType."
-							+ PropertyType.nameFromValue(PropertyTypeToClass.getTypeForClass(mapping.getFieldType())) + ")");
+					writer.println("\t * " + mapping.getName() + " (PropertyType."
+							+ PropertyType.nameFromValue(PropertyTypeToClass.getTypeForClass(mapping.getType())) + ")");
 					writer.println("\t */");
 					writer.println("\t@Property");
 					writer.println("\tprivate " + typename + " " + fieldname + ";");

@@ -13,7 +13,7 @@ public class NodePathClassNamingStrategy implements ClassNamingStrategy {
 
 	public String generateName(Node node) throws JcrException {
 		try {
-			return node.getPath();
+			return node.getNodeName();
 		} catch (final Exception e) {
 			throw new JcrException("Exception in generateName", e);
 		}

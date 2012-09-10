@@ -29,7 +29,7 @@ public class DefaultPropertyNamingStrategy implements PropertyNamingStrategy {
 
 	public String generateName(Property property) throws JcrException {
 		try {
-			return fixName(property.getName());
+			return fixName(property.name());
 		} catch (final Exception e) {
 			throw new JcrException("Exception in generateName", e);
 		}

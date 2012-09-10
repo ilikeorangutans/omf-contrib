@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+
 import org.om.core.api.mapping.EntityMapping;
 import org.om.core.impl.persistence.jcr.exception.JcrException;
 import org.om.jcr2pojo.classgenerator.DAOGenerator;
@@ -13,8 +16,6 @@ import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
 import org.om.jcr2pojo.entitymappingbuilder.impl.EntityMappingBuilderImpl;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.ClassNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.PropertyNamingStrategy;
-import org.w3c.dom.Node;
-import org.w3c.dom.traversal.NodeIterator;
 
 /**
  * @author tome
@@ -74,7 +75,7 @@ public class JCRJavaPersistenceGenerator {
 				while (iter.hasNext()) {
 					final String key = iter.next();
 					final EntityMapping entityMapping = mappings.get(key);
-					if (entityMapping.getItemMappings().getSize() > 0) {
+					if (entityMapping.getMappedFields().getSize() > 0) {
 						generatePOJO(entityMapping);
 						generateDAO(entityMapping);
 					}

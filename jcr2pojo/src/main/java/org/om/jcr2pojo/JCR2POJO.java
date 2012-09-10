@@ -2,9 +2,8 @@ package org.om.jcr2pojo;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.jcr.Session;
-
 import org.om.core.api.mapping.EntityMapping;
+import org.om.core.api.session.Session;
 import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
 import org.om.jcr2pojo.classgenerator.POJOGenerator;
 import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;

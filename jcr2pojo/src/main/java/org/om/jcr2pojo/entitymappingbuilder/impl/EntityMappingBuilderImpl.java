@@ -3,7 +3,10 @@ package org.om.jcr2pojo.entitymappingbuilder.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.om.core.api.annotation.Property;
+import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
+
 import org.om.core.api.mapping.EntityMapping;
 import org.om.core.api.mapping.field.Mapping;
 import org.om.core.api.session.Session;
@@ -14,7 +17,6 @@ import org.om.core.impl.persistence.jcr.util.PropertyTypeToClass;
 import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.ClassNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.PropertyNamingStrategy;
-import org.w3c.dom.Node;
 
 /**
  * @author tome
