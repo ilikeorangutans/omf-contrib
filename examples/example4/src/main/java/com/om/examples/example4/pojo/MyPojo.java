@@ -27,7 +27,6 @@ import org.om.core.api.annotation.Property;
 @Entity
 public class MyPojo {
 	@Id
-	@Property
 	private String id;
 
 	@Property

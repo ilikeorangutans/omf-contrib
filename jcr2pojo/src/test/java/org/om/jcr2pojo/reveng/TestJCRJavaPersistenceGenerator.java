@@ -50,7 +50,7 @@ public class TestJCRJavaPersistenceGenerator {
 				 * import some data
 				 */
 				final InputStream is = new FileInputStream(files[i]);
-				org.om.jcr2pojo.reveng.ImportUtil.importXML(testname, is);
+				org.om.dao.util.ImportUtil.importXML(testname, is);
 				/*
 				 * get a session
 				 */

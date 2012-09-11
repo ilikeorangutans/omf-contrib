@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.om.jcr2pojo.reveng;
+package org.om.dao.util;
 
 import java.io.InputStream;
 
@@ -23,7 +23,6 @@ import javax.jcr.Session;
 
 import org.om.core.impl.persistence.jcr.exception.JcrException;
 import org.om.dao.jcr.sessionfactory.TransientRepositoryJCRSessionFactory;
-import org.om.dao.util.RecursiveDelete;
 
 /**
  * @author tome

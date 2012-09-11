@@ -26,3 +26,12 @@ examples/example3/.classpath
 /jcr2pojo/derby.log
 /jcr2pojo/repository.xml
 /jcr2pojo/repository/
+/examples/example1/repository.xml
+/examples/example1/repository/
+/examples/example2/repository.xml
+/examples/example2/repository/
+/examples/example3/repository.xml
+/examples/example3/repository/
+/examples/example1/derby.log
+/examples/example2/derby.log
+/examples/example3/derby.log

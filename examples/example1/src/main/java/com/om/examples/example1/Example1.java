@@ -45,12 +45,12 @@ public class Example1 {
 			/*
 			 * save the object
 			 */
-			dao.save(myPojo);
+			// dao.save(myPojo);
 			/*
 			 * get the object back
 			 */
-			MyPojo retrievedPojo = dao.get(myPojo.getId());
-			System.out.println(retrievedPojo.getId());
+			// MyPojo retrievedPojo = dao.get(myPojo.getId());
+			// System.out.println(retrievedPojo.getId());
 		} else {
 			System.out.println("Unable to get session, check your settings");
 		}

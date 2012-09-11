@@ -21,5 +21,11 @@
 			<artifactId>jcrcache</artifactId>
 			<version>${omVersion}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-core</artifactId>
+			<version>${jackrabbitVersion}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>
