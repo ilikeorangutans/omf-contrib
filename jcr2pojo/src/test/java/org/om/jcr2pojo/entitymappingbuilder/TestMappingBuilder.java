@@ -23,9 +23,10 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.om.core.api.mapping.EntityMapping;
 import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
-import org.om.jcr2pojo.entitymappingbuilder.impl.EntityMappingBuilderImpl;
+import org.om.jcr2pojo.classmapping.ClassMapping;
+import org.om.jcr2pojo.classmappingbuilder.ClassMappingBuilder;
+import org.om.jcr2pojo.classmappingbuilder.impl.ClassMappingBuilderImpl;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.DefaultPropertyNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.NodeIdentifierClassNamingStrategy;
 
@@ -90,12 +91,12 @@ public class TestMappingBuilder {
 		try {
 			final Session session = new PropertiesConfiguredJCRSessionFactory().getSession();
 			Assert.assertNotNull(session);
-			final EntityMappingBuilder entityMappingBuilder = new EntityMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
+			final ClassMappingBuilder classMappingBuilder = new ClassMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
 					new DefaultPropertyNamingStrategy());
-			final EntityMapping entityMapping = entityMappingBuilder.build("foo/bar", session);
-			Assert.assertNotNull(entityMapping);
-			Assert.assertNotNull(entityMapping.getMappedFields());
-			Assert.assertTrue(entityMapping.getMappedFields().getSize() == 2);
+			final ClassMapping classMapping = classMappingBuilder.build("foo/bar", session);
+			Assert.assertNotNull(classMapping);
+			Assert.assertNotNull(classMapping.getFields());
+			Assert.assertTrue(classMapping.getFields().length == 2);
 		} catch (final Exception e) {
 			e.printStackTrace();
 			Assert.fail();

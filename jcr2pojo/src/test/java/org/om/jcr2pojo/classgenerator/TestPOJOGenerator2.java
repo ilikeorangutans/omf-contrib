@@ -25,11 +25,11 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.om.core.api.mapping.EntityMapping;
 import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
 import org.om.core.impl.persistence.jcr.util.RecursiveDelete;
-import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
-import org.om.jcr2pojo.entitymappingbuilder.impl.EntityMappingBuilderImpl;
+import org.om.jcr2pojo.classmapping.ClassMapping;
+import org.om.jcr2pojo.classmappingbuilder.ClassMappingBuilder;
+import org.om.jcr2pojo.classmappingbuilder.impl.ClassMappingBuilderImpl;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.DefaultPropertyNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.NodeIdentifierClassNamingStrategy;
 
@@ -108,18 +108,18 @@ public class TestPOJOGenerator2 {
 			/*
 			 * mappings
 			 */
-			final EntityMappingBuilder entityMappingBuilder = new EntityMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
+			final ClassMappingBuilder classMappingBuilder = new ClassMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
 					new DefaultPropertyNamingStrategy());
-			final EntityMapping entityMapping = entityMappingBuilder.build("foo/bar", session);
-			Assert.assertNotNull(entityMapping);
-			Assert.assertNotNull(entityMapping.getMappedFields());
-			Assert.assertTrue(entityMapping.getMappedFields().getSize() == 5);
+			final ClassMapping classMapping = classMappingBuilder.build("foo/bar", session);
+			Assert.assertNotNull(classMapping);
+			Assert.assertNotNull(classMapping.getFields());
+			Assert.assertTrue(classMapping.getFields().length == 5);
 			/*
 			 * class
 			 */
 			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			final POJOGenerator pojoGenerator = new POJOGenerator();
-			pojoGenerator.generatePOJO("com.khubla", entityMapping, baos);
+			pojoGenerator.generatePOJO("com.khubla", classMapping, baos);
 			System.out.println(baos.toString());
 		} catch (final Exception e) {
 			e.printStackTrace();

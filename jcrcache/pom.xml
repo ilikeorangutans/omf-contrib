@@ -9,4 +9,12 @@
 	<artifactId>jcrcache</artifactId>
 	<name>Object Mapper - JCR Cache</name>
 	<version>${omVersion}</version>
+	<dependencies>
+		<dependency>
+			<groupId>org.objectmapper</groupId>
+			<artifactId>omf-jcr</artifactId>
+			<version>${omVersion}</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>

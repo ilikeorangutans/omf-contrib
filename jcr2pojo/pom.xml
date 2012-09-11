@@ -9,4 +9,13 @@
 	<artifactId>jcr2pojo</artifactId>
 	<name>Object Mapper - JCR to POJO</name>
 	<version>${omVersion}</version>
+	<dependencies>
+		<dependency>
+			<groupId>org.objectmapper.contrib</groupId>
+			<artifactId>dao</artifactId>
+			<version>${omVersion}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>

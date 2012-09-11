@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.om.jcr2pojo.entitymappingbuilder.impl;
-
-import java.util.HashSet;
-import java.util.Set;
+package org.om.jcr2pojo.classmappingbuilder.impl;
 
 import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.PropertyIterator;
+import javax.jcr.Session;
 
-import org.om.core.api.mapping.EntityMapping;
-import org.om.core.api.mapping.field.Mapping;
-import org.om.core.api.session.Session;
-import org.om.core.impl.mapping.EntityMappingImpl;
-import org.om.core.impl.mapping.field.ImmutablePropertyMapping;
-import org.om.core.impl.persistence.jcr.exception.JcrException;
 import org.om.core.impl.persistence.jcr.util.PropertyTypeToClass;
-import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
+import org.om.jcr2pojo.classmapping.ClassMapping;
+import org.om.jcr2pojo.classmapping.FieldMapping;
+import org.om.jcr2pojo.classmappingbuilder.ClassMappingBuilder;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.ClassNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.PropertyNamingStrategy;
+import org.om.jcr2pojo.exception.JCR2POJOException;
 
 /**
  * @author tome
  */
-public class EntityMappingBuilderImpl implements EntityMappingBuilder {
+public class ClassMappingBuilderImpl implements ClassMappingBuilder {
 	/**
 	 * class naming strategy
 	 */
@@ -53,22 +48,23 @@ public class EntityMappingBuilderImpl implements EntityMappingBuilder {
 	/**
 	 * ctor
 	 */
-	public EntityMappingBuilderImpl(ClassNamingStrategy classNamingStrategy, PropertyNamingStrategy propertyNamingStrategy) {
+	public ClassMappingBuilderImpl(ClassNamingStrategy classNamingStrategy, PropertyNamingStrategy propertyNamingStrategy) {
 		this.classNamingStrategy = classNamingStrategy;
 		this.propertyNamingStrategy = propertyNamingStrategy;
 	}
 
-	public EntityMapping build(Node node) throws JcrException {
+	/**
+	 * build class mappings from a node
+	 */
+	public ClassMapping build(Node node) throws JCR2POJOException {
 		try {
+			final ClassMapping classMapping = new ClassMapping(classNamingStrategy.generateName(node));
 			/*
 			 * node type
 			 */
 			// NodeType nodeType = node.getPrimaryNodeType();
 			// System.out.println(nodeType.getName());
-			/*
-			 * mapping
-			 */
-			Set<Mapping> mappings = new HashSet<Mapping>();
+
 			/*
 			 * get properties
 			 */
@@ -97,29 +93,23 @@ public class EntityMappingBuilderImpl implements EntityMappingBuilder {
 					/*
 					 * mapping
 					 */
-					final ImmutablePropertyMapping propertyMapping = new ImmutablePropertyMapping(fieldName, false, property.getName(), type, null, null, null);
-					mappings.add(propertyMapping);
+					final FieldMapping fieldMapping = new FieldMapping(fieldName, type);
+					classMapping.addField(fieldMapping);
 				}
 			}
 			/*
 			 * done
 			 */
-			final EntityMappingImpl entityMappingImpl = new EntityMappingImpl(classNamingStrategy.generateName(node));
-			entityMappingImpl.setPropertyMap(new ImmutablePropertyMap(mappings));
-			return entityMappingImpl;
+			return classMapping;
 		} catch (final Exception e) {
-			throw new JcrException("Exception in build", e);
+			throw new JCR2POJOException("Exception in build", e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.om.core.impl.persistence.jcr.impl.mappingbuilder.EntityMappingBuilder
-	 * #build(java.lang.String, javax.jcr.Session)
+	/**
+	 * build class mappings from JCR path & Session
 	 */
-	public EntityMapping build(String jcrPath, Session session) throws JcrException {
+	public ClassMapping build(String jcrPath, Session session) throws JCR2POJOException {
 		try {
 			/*
 			 * get the node
@@ -131,7 +121,7 @@ public class EntityMappingBuilderImpl implements EntityMappingBuilder {
 				throw new Exception("Unable to find node '" + jcrPath + "'");
 			}
 		} catch (final Exception e) {
-			throw new JcrException("Exception in build for path '" + jcrPath + "'", e);
+			throw new JCR2POJOException("Exception in build for path '" + jcrPath + "'", e);
 		}
 	}
 

@@ -17,12 +17,13 @@ package org.om.jcr2pojo;
 
 import java.io.ByteArrayOutputStream;
 
-import org.om.core.api.mapping.EntityMapping;
-import org.om.core.api.session.Session;
+import javax.jcr.Session;
+
 import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
 import org.om.jcr2pojo.classgenerator.POJOGenerator;
-import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
-import org.om.jcr2pojo.entitymappingbuilder.impl.EntityMappingBuilderImpl;
+import org.om.jcr2pojo.classmapping.ClassMapping;
+import org.om.jcr2pojo.classmappingbuilder.ClassMappingBuilder;
+import org.om.jcr2pojo.classmappingbuilder.impl.ClassMappingBuilderImpl;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.DefaultPropertyNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.NodeIdentifierClassNamingStrategy;
 
@@ -35,7 +36,7 @@ public class JCR2POJO {
 	/**
 	 * stuff we need
 	 */
-	private static EntityMappingBuilder entityMappingBuilder = new EntityMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
+	private static ClassMappingBuilder classMappingBuilder = new ClassMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
 			new DefaultPropertyNamingStrategy());
 	private static POJOGenerator pojoGenerator = new POJOGenerator();
 
@@ -59,13 +60,13 @@ public class JCR2POJO {
 			/*
 			 * build the mappings
 			 */
-			final EntityMapping entityMapping = entityMappingBuilder.build(jcrPath, session);
-			if (null != entityMapping) {
+			final ClassMapping classMapping = classMappingBuilder.build(jcrPath, session);
+			if (null != classMapping) {
 				/*
 				 * build the class
 				 */
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				pojoGenerator.generatePOJO(packageName, entityMapping, baos);
+				pojoGenerator.generatePOJO(packageName, classMapping, baos);
 				System.out.println(baos.toString());
 			}
 			/*

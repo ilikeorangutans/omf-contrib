@@ -30,5 +30,11 @@
 			<version>2.4.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.objectmapper</groupId>
+			<artifactId>omf-jcr</artifactId>
+			<version>${omVersion}</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>

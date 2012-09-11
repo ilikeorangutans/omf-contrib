@@ -23,14 +23,14 @@ import java.util.Iterator;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 
-import org.om.core.api.mapping.EntityMapping;
-import org.om.core.impl.persistence.jcr.exception.JcrException;
 import org.om.jcr2pojo.classgenerator.DAOGenerator;
 import org.om.jcr2pojo.classgenerator.POJOGenerator;
-import org.om.jcr2pojo.entitymappingbuilder.EntityMappingBuilder;
-import org.om.jcr2pojo.entitymappingbuilder.impl.EntityMappingBuilderImpl;
+import org.om.jcr2pojo.classmapping.ClassMapping;
+import org.om.jcr2pojo.classmappingbuilder.ClassMappingBuilder;
+import org.om.jcr2pojo.classmappingbuilder.impl.ClassMappingBuilderImpl;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.ClassNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.PropertyNamingStrategy;
+import org.om.jcr2pojo.exception.JCR2POJOException;
 
 /**
  * @author tome
@@ -76,12 +76,12 @@ public class JCRJavaPersistenceGenerator {
 	/**
 	 * map nodes and produce java to the console
 	 */
-	public void execute() throws JcrException {
+	public void execute() throws JCR2POJOException {
 		try {
 			/*
 			 * get the mappings
 			 */
-			final HashMap<String, EntityMapping> mappings = mapNode(node);
+			final HashMap<String, ClassMapping> mappings = mapNode(node);
 			if ((null != mappings) && (mappings.size() > 0)) {
 				/*
 				 * walk
@@ -89,70 +89,70 @@ public class JCRJavaPersistenceGenerator {
 				final Iterator<String> iter = mappings.keySet().iterator();
 				while (iter.hasNext()) {
 					final String key = iter.next();
-					final EntityMapping entityMapping = mappings.get(key);
-					if (entityMapping.getMappedFields().getSize() > 0) {
-						generatePOJO(entityMapping);
-						generateDAO(entityMapping);
+					final ClassMapping classMapping = mappings.get(key);
+					if (classMapping.getFields().length > 0) {
+						generatePOJO(classMapping);
+						generateDAO(classMapping);
 					}
 				}
 			}
 		} catch (final Exception e) {
-			throw new JcrException("Exception in reverseEngineer", e);
+			throw new JCR2POJOException("Exception in reverseEngineer", e);
 		}
 	}
 
 	/**
 	 * generate DAO
 	 */
-	private void generateDAO(EntityMapping entityMapping) throws JcrException {
+	private void generateDAO(ClassMapping classMapping) throws JCR2POJOException {
 		try {
-			final FileOutputStream fos = new FileOutputStream(outputPath + "/" + entityMapping.getName() + "DAO" + ".java");
+			final FileOutputStream fos = new FileOutputStream(outputPath + "/" + classMapping.getName() + "DAO" + ".java");
 			final DAOGenerator daoGenerator = new DAOGenerator();
-			daoGenerator.generateDAO(entityMapping.getName() + "DAO", namespace, fos);
+			daoGenerator.generateDAO(classMapping.getName() + "DAO", namespace, fos);
 		} catch (final Exception e) {
-			throw new JcrException("Exception in generateJava", e);
+			throw new JCR2POJOException("Exception in generateJava", e);
 		}
 	}
 
 	/**
 	 * generate POJO
 	 */
-	private void generatePOJO(EntityMapping entityMapping) throws JcrException {
+	private void generatePOJO(ClassMapping classMapping) throws JCR2POJOException {
 		try {
-			final FileOutputStream fos = new FileOutputStream(outputPath + "/" + entityMapping.getName() + ".java");
+			final FileOutputStream fos = new FileOutputStream(outputPath + "/" + classMapping.getName() + ".java");
 			final POJOGenerator pojoGenerator = new POJOGenerator();
-			pojoGenerator.generatePOJO(namespace, entityMapping, fos);
+			pojoGenerator.generatePOJO(namespace, classMapping, fos);
 		} catch (final Exception e) {
-			throw new JcrException("Exception in generateJava", e);
+			throw new JCR2POJOException("Exception in generateJava", e);
 		}
 	}
 
 	/**
 	 * map all nodes that can be found
 	 */
-	private HashMap<String, EntityMapping> mapNode(Node node) throws JcrException {
+	private HashMap<String, ClassMapping> mapNode(Node node) throws JCR2POJOException {
 		try {
-			final HashMap<String, EntityMapping> ret = new HashMap<String, EntityMapping>();
-			final EntityMappingBuilder entityMapper = new EntityMappingBuilderImpl(classNamingStrategy, propertyNamingStrategy);
+			final HashMap<String, ClassMapping> ret = new HashMap<String, ClassMapping>();
+			final ClassMappingBuilder entityMapper = new ClassMappingBuilderImpl(classNamingStrategy, propertyNamingStrategy);
 			final NodeIterator iter = node.getNodes();
 			while (iter.hasNext()) {
 				final Node n = iter.nextNode();
 				/*
 				 * map
 				 */
-				final EntityMapping mapping = entityMapper.build(n);
+				final ClassMapping mapping = entityMapper.build(n);
 				ret.put(mapping.getName(), mapping);
 				/*
 				 * node has nodes?
 				 */
 				if (node.hasNodes()) {
-					final HashMap<String, EntityMapping> subCollection = mapNode(n);
+					final HashMap<String, ClassMapping> subCollection = mapNode(n);
 					ret.putAll(subCollection);
 				}
 			}
 			return ret;
 		} catch (final Exception e) {
-			throw new JcrException("Exception in mapNode", e);
+			throw new JCR2POJOException("Exception in mapNode", e);
 		}
 	}
 }

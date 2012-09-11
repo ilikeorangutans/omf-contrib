@@ -13,23 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.om.jcr2pojo.entitymappingbuilder;
 
-import javax.jcr.Node;
+package org.om.jcr2pojo.classmapping;
 
-import org.om.core.api.mapping.EntityMapping;
-import org.om.core.api.session.Session;
-import org.om.core.impl.persistence.jcr.exception.JcrException;
-
-public interface EntityMappingBuilder {
-
-	/**
-	 * build entity mapping
-	 */
-	public abstract EntityMapping build(Node node) throws JcrException;
+/**
+ * 
+ * @author tome
+ * 
+ */
+public class FieldMapping {
 
 	/**
-	 * build entity mapping
+	 * field name
 	 */
-	public abstract EntityMapping build(String jcrPath, Session session) throws JcrException;
+	private final String name;
+
+	/**
+	 * type
+	 */
+	private final Class<?> type;
+
+	/**
+	 * ctor
+	 */
+	public FieldMapping(String name, Class<?> type) {
+		this.name = name;
+		this.type = type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Class<?> getType() {
+		return type;
+	}
+
 }

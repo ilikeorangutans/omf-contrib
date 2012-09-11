@@ -18,16 +18,13 @@ package org.om.jcr2pojo.classgenerator;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 
 import javax.jcr.PropertyType;
 
-import org.om.core.api.mapping.EntityMapping;
-import org.om.core.api.mapping.Fields;
-import org.om.core.api.mapping.MappedField;
 import org.om.core.impl.persistence.jcr.util.PropertyTypeToClass;
+import org.om.jcr2pojo.classmapping.ClassMapping;
+import org.om.jcr2pojo.classmapping.FieldMapping;
 import org.om.jcr2pojo.exception.JCR2POJOException;
 
 /**
@@ -37,7 +34,7 @@ public class POJOGenerator {
 	/**
 	 * generate a POJO
 	 */
-	public void generatePOJO(String namespace, EntityMapping entityMapping, OutputStream outputStream) throws JCR2POJOException {
+	public void generatePOJO(String namespace, ClassMapping classMapping, OutputStream outputStream) throws JCR2POJOException {
 		try {
 			/*
 			 * writer
@@ -69,17 +66,16 @@ public class POJOGenerator {
 			 * declare the class
 			 */
 			writer.println("@Entity");
-			writer.println("public class " + entityMapping.getName() + "{");
+			writer.println("public class " + classMapping.getName() + "{");
 			writer.println();
 			/*
 			 * walk fields
 			 */
-			final Fields fields = entityMapping.getMappedFields();
+			final FieldMapping[] fields = classMapping.getFields();
 			if (null != fields) {
-				final Collection<MappedField> mappings = fields.getAll();
-				final Iterator<MappedField> iter = mappings.iterator();
-				while (iter.hasNext()) {
-					final MappedField mapping = iter.next();
+
+				for (int i = 0; i < fields.length; i++) {
+					final FieldMapping mapping = fields[i];
 					/*
 					 * typename
 					 */
