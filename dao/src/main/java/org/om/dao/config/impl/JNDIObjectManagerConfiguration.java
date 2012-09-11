@@ -24,9 +24,9 @@ import org.om.core.api.session.factory.SessionFactory;
 import org.om.core.impl.persistence.jcr.JcrPersistenceAdapterFactory;
 import org.om.core.impl.persistence.jcr.JcrPersistenceContext;
 import org.om.core.impl.persistence.jcr.sessionfactory.JCRSessionFactory;
-import org.om.core.impl.session.factory.DefaultSessionFactory;
 import org.om.dao.config.ObjectManagerConfiguration;
 import org.om.dao.exception.DAOException;
+import org.om.dao.sessionfactory.DefaultSessionFactory;
 
 /**
  * @author tome

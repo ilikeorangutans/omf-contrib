@@ -17,5 +17,11 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-core</artifactId>
+			<version>${jackrabbitVersion}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

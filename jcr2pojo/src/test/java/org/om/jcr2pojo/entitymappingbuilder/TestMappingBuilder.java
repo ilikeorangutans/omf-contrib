@@ -23,7 +23,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
+import org.om.dao.jcr.sessionfactory.TransientRepositoryJCRSessionFactory;
 import org.om.jcr2pojo.classmapping.ClassMapping;
 import org.om.jcr2pojo.classmappingbuilder.ClassMappingBuilder;
 import org.om.jcr2pojo.classmappingbuilder.impl.ClassMappingBuilderImpl;
@@ -37,7 +37,7 @@ public class TestMappingBuilder {
 	@Before
 	public void setUp() {
 		try {
-			final Session session = new PropertiesConfiguredJCRSessionFactory().getSession();
+			final Session session = new TransientRepositoryJCRSessionFactory().getSession();
 			Assert.assertNotNull(session);
 			/*
 			 * get the root node
@@ -64,7 +64,7 @@ public class TestMappingBuilder {
 	@After
 	public void tearDown() {
 		try {
-			final Session session = new PropertiesConfiguredJCRSessionFactory().getSession();
+			final Session session = new TransientRepositoryJCRSessionFactory().getSession();
 			Assert.assertNotNull(session);
 			/*
 			 * get the root node
@@ -89,7 +89,7 @@ public class TestMappingBuilder {
 	@Test
 	public void test1() {
 		try {
-			final Session session = new PropertiesConfiguredJCRSessionFactory().getSession();
+			final Session session = new TransientRepositoryJCRSessionFactory().getSession();
 			Assert.assertNotNull(session);
 			final ClassMappingBuilder classMappingBuilder = new ClassMappingBuilderImpl(new NodeIdentifierClassNamingStrategy(),
 					new DefaultPropertyNamingStrategy());

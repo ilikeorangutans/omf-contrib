@@ -20,3 +20,9 @@ jcrcache/target/
 objectmanager-maven-plugin/.classpath
 objectmanager-maven-plugin/target/
 examples/example3/.classpath
+/dao/derby.log
+/dao/repository.xml
+/dao/repository/
+/jcr2pojo/derby.log
+/jcr2pojo/repository.xml
+/jcr2pojo/repository/

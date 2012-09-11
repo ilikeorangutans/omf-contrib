@@ -25,7 +25,7 @@ import javax.jcr.Session;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.om.core.impl.persistence.jcr.sessionfactory.impl.PropertiesConfiguredJCRSessionFactory;
+import org.om.dao.jcr.sessionfactory.TransientRepositoryJCRSessionFactory;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.DefaultPropertyNamingStrategy;
 import org.om.jcr2pojo.entitymappingbuilder.namingstrategy.impl.NodeNameClassNamingStrategy;
 
@@ -54,7 +54,7 @@ public class TestJCRJavaPersistenceGenerator {
 				/*
 				 * get a session
 				 */
-				final Session session = new PropertiesConfiguredJCRSessionFactory().getSession();
+				final Session session = new TransientRepositoryJCRSessionFactory().getSession();
 				Assert.assertNotNull(session);
 				/*
 				 * get the node
