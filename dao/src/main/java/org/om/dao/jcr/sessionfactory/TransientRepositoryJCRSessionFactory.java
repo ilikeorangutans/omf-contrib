@@ -17,6 +17,7 @@ package org.om.dao.jcr.sessionfactory;
 
 import javax.jcr.Repository;
 import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.core.TransientRepository;
 import org.om.core.impl.persistence.jcr.exception.JcrException;
@@ -25,12 +26,18 @@ import org.om.core.impl.persistence.jcr.sessionfactory.JCRSessionFactory;
 /**
  * 
  * A session factory which leverages the Transient Repo. Very useful for running
- * unit tests against. Used in the contribs as well as the contrib examples.
+ * unit tests.
  * 
  * @author tome
  * 
  */
 public class TransientRepositoryJCRSessionFactory implements JCRSessionFactory {
+
+	/**
+	 * credentials
+	 */
+	private static final String username = "admin";
+	private static final String password = "admin";
 
 	/**
 	 * the repo, a singleton
@@ -42,10 +49,9 @@ public class TransientRepositoryJCRSessionFactory implements JCRSessionFactory {
 			if (null == repository) {
 				repository = new TransientRepository();
 			}
-			return repository.login();
+			return repository.login(new SimpleCredentials(username, password.toCharArray()));
 		} catch (final Exception e) {
 			throw new JcrException("Exception in getSession", e);
 		}
 	}
-
 }

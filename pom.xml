@@ -54,7 +54,7 @@
 		<module>http</module>
 		<module>examples</module>
 		<module>jcr2pojo</module>
-		<module>objectmanager-maven-plugin</module>
+	<!-- 	<module>objectmanager-maven-plugin</module> -->
 	</modules>
 	<build>
 		<plugins>

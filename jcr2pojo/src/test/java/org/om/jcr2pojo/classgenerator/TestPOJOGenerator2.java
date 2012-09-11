@@ -51,7 +51,6 @@ public class TestPOJOGenerator2 {
 			 * delete existing nodes
 			 */
 			RecursiveDelete.recursiveDelete(rootNode);
-			session.save();
 			/*
 			 * add two nodes, one of which has properties
 			 */
