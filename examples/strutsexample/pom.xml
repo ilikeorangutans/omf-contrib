@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.objectmapper.contrib</groupId>
+		<artifactId>contrib</artifactId>
+		<version>0.1.0</version>
+		<relativePath>../..</relativePath>
+	</parent>
+	<artifactId>strutsexample</artifactId>
+	<packaging>war</packaging>
+	<name>Object Mapper - Example1</name>
+	<version>${omVersion}</version>
+	<dependencies>
+		<dependency>
+			<groupId>org.objectmapper.contrib</groupId>
+			<artifactId>dao</artifactId>
+			<version>${omVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.jackrabbit</groupId>
+			<artifactId>jackrabbit-core</artifactId>
+			<version>${jackrabbitVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>

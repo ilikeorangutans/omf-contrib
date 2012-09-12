@@ -35,3 +35,5 @@ examples/example3/.classpath
 /examples/example1/derby.log
 /examples/example2/derby.log
 /examples/example3/derby.log
+/examples/strutsexample/target/
+/examples/strutsexample/.classpath
