@@ -29,12 +29,14 @@ import org.om.dao.util.SessionUtil;
 
 /**
  * 
+ * Simple implementation of open session in view for OMF
+ * 
  * @author tome
  * 
  */
 public class ObjectManagerSessionRequestFilter implements Filter {
 
-	private final static String SESSION_OBJECT_NAME = "ObjectManagerSession";
+	public final static String SESSION_OBJECT_NAME = "ObjectManagerSession";
 
 	public void destroy() {
 

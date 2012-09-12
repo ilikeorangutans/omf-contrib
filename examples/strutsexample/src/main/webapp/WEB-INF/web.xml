@@ -18,10 +18,23 @@
 	<param-value>com.om.examples.strutsexample.action</param-value>
   </init-param>
   </filter>
+  <filter>
+    <filter-name>omf</filter-name>
+    <filter-class>
+      org.om.http.filter.ObjectManagerSessionRequestFilter
+    </filter-class>
+
+  </filter>
+    <filter-mapping>
+    <filter-name>omf</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <filter-mapping>
     <filter-name>struts2</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+
 	 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

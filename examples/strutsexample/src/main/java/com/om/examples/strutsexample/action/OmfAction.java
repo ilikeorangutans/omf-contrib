@@ -15,38 +15,40 @@
  */
 package com.om.examples.strutsexample.action;
 
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.om.core.api.session.Session;
+import org.om.http.filter.ObjectManagerSessionRequestFilter;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * This action is, essentially, index.html. it binds to no action name and the
- * "/" namespace and pushes the user to the the login
  * 
  * @author tome
+ * 
  */
-@Action("")
-@Namespace("/")
-@Result(name = "success", location = "/index.jsp")
-public class IndexAction extends OmfAction {
+public abstract class OmfAction extends ActionSupport implements ServletRequestAware {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * the omf session
+	 */
+	private Session omfSession;
 
-	@Override
-	public String execute() throws Exception {
-		try {
-			Session session = this.getOmfSession();
-			if (null != session) {
-				return SUCCESS;
-			} else {
-				return this.ERROR;
-			}
-		} catch (final Exception e) {
-			throw new Exception("Exception in execute", e);
-		}
+	public Session getOmfSession() {
+		return omfSession;
 	}
+
+	public void setOmfSession(Session omfSession) {
+		this.omfSession = omfSession;
+	}
+
+	public void setServletRequest(HttpServletRequest httpServletRequest) {
+		this.omfSession = (Session) httpServletRequest.getAttribute(ObjectManagerSessionRequestFilter.SESSION_OBJECT_NAME);
+	}
+
 }
