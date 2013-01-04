@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.objectmapper.contrib</groupId>
 		<artifactId>contrib</artifactId>
-		<version>0.1.0</version>
+		<version>0.2.1</version>
 		<relativePath>../..</relativePath>
 	</parent>
 	<artifactId>example1</artifactId>
